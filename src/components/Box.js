@@ -3,15 +3,19 @@ class Box extends React.Component {
   render() {
     return (
       <button
-        id={this.props.key}
+        onClick={this.props.onClick}
+        id={this.props.id}
         style={{
+          fontSize: "5em",
           backgroundColor: "whitesmoke",
           width: "164px",
           height: "164px",
           border: "1px solid black",
-          color: "black",
+          color: "blue",
         }}
-      ></button>
+      >
+        {this.props.children}
+      </button>
     );
   }
 }
