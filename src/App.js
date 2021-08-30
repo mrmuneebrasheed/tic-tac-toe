@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React from "react";
+import Box from "./components/Box";
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = { board: ["", "", "", "", "", "", "", "", ""] };
+  }
+  render() {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          boxShadow: "0 0 50px 10px grey",
+          justifyContent: "space-evenly",
+          width: "500px",
+          height: "500px",
+          margin: "100px auto",
+          backgroundColor: "grey",
+        }}
+      >
+        {this.state.board.map((box, index) => (
+          <Box key={index}></Box>
+        ))}
+      </div>
+    );
+  }
 }
 
 export default App;
