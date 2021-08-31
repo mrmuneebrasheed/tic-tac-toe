@@ -11,7 +11,7 @@ class App extends React.Component {
       player1: "",
       player2: "",
       playerActive: "X",
-      win: false,
+      win: "notWin",
       winConditions: [
         [0, 1, 2],
         [3, 4, 5],
@@ -30,14 +30,14 @@ class App extends React.Component {
     // Verifier les conditions de Victoire
     this.checkVictory(board);
 
-    // Vérifier si l'element est occupé déja.
-    if (board[event.target.id] !== "") return;
-
     // Verifier si le tableau est complete.
     const boolean = board.some((box) => box === "");
     if (!boolean) {
-      console.log("Full");
+      console.log("full");
+      this.setState({ win: "draw" });
     }
+    // Vérifier si l'element est occupé déja.
+    if (board[event.target.id] !== "") return;
 
     // Changements de State
     const playerActive = this.state.playerActive;
@@ -50,7 +50,7 @@ class App extends React.Component {
     this.state.winConditions.map((list) => {
       const [a, b, c] = list;
       if (board[a] !== "" && board[a] === board[b] && board[b] === board[c])
-        this.setState({ win: true, playerActive: board[a] });
+        this.setState({ win: "win", playerActive: board[a] });
       return;
     });
   }
@@ -65,7 +65,7 @@ class App extends React.Component {
       player1: "",
       player2: "",
       playerActive: "X",
-      win: false,
+      win: "notWin",
     });
   }
 
@@ -131,13 +131,14 @@ class App extends React.Component {
                 margin: "30px auto",
               }}
             >
-              {this.state.win ? (
+              {this.state.win === "win" && (
                 <div className="h2 text-white p-5">{`${
                   this.state.playerActive === "X"
                     ? this.state.player1
                     : this.state.player2
                 } Wins`}</div>
-              ) : (
+              )}
+              {this.state.win === "notWin" &&
                 this.state.board.map((box, index) => (
                   <Box
                     id={index}
@@ -147,7 +148,9 @@ class App extends React.Component {
                   >
                     {box}
                   </Box>
-                ))
+                ))}
+              {this.state.win === "draw" && (
+                <div className="h2 text-white p-5">Game Draw</div>
               )}
             </div>
             <button
